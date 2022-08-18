@@ -1,0 +1,77 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20220804071148_Initial.cs" />
+    <Compile Remove="Migrations\20220804071148_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20220804230813_student.cs" />
+    <Compile Remove="Migrations\20220804230813_student.Designer.cs" />
+    <Compile Remove="Migrations\20220805025748_AddProduct.cs" />
+    <Compile Remove="Migrations\20220805025748_AddProduct.Designer.cs" />
+    <Compile Remove="Migrations\20220805030549_AddProduct.cs" />
+    <Compile Remove="Migrations\20220805030549_AddProduct.Designer.cs" />
+    <Compile Remove="Migrations\20220805032503_OrderHeader.cs" />
+    <Compile Remove="Migrations\20220805032503_OrderHeader.Designer.cs" />
+    <Compile Remove="Migrations\20220805033323_OrderDetail.cs" />
+    <Compile Remove="Migrations\20220805033323_OrderDetail.Designer.cs" />
+    <Compile Remove="Migrations\20220805034106_FileCollection.cs" />
+    <Compile Remove="Migrations\20220805034106_FileCollection.Designer.cs" />
+    <Compile Remove="Migrations\20220805061410_Account.cs" />
+    <Compile Remove="Migrations\20220805061410_Account.Designer.cs" />
+    <Compile Remove="Migrations\20220805062105_UserRole.cs" />
+    <Compile Remove="Migrations\20220805062105_UserRole.Designer.cs" />
+    <Compile Remove="Migrations\20220808034038_AddSeed.cs" />
+    <Compile Remove="Migrations\20220808034038_AddSeed.Designer.cs" />
+    <Compile Remove="Migrations\20220808034513_AddSeed.cs" />
+    <Compile Remove="Migrations\20220808034513_AddSeed.Designer.cs" />
+    <Compile Remove="Migrations\20220818044541_buku.cs" />
+    <Compile Remove="Migrations\20220818044541_buku.Designer.cs" />
+    <Compile Remove="Migrations\20220818045214_addbook.cs" />
+    <Compile Remove="Migrations\20220818045214_addbook.Designer.cs" />
+    <Compile Remove="Migrations\20220818045317_addbooks.cs" />
+    <Compile Remove="Migrations\20220818045317_addbooks.Designer.cs" />
+    <Compile Remove="Migrations\20220818073001_addAccount.cs" />
+    <Compile Remove="Migrations\20220818073001_addAccount.Designer.cs" />
+    <Compile Remove="Migrations\20220818073130_addAccount.cs" />
+    <Compile Remove="Migrations\20220818073130_addAccount.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Properties\launchSettings - Copy.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_WebToolingArtifacts Remove="Properties\launchSettings - Copy.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Properties\launchSettings - Copy.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.27" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.27" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.27">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.27" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ViewModel\ViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Images\" />
+  </ItemGroup>
+
+
+</Project>

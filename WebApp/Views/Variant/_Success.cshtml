@@ -1,0 +1,24 @@
+﻿@model ViewModel.VariantViewModel
+@{
+    string type = "";
+    switch (ViewBag.Title)
+    {
+        case "Create":
+            type = "text-success";
+            break;
+        case "Edit":
+            type = "text-warning";
+            break;
+        default:
+            type = "text-danger";
+            break;
+    }
+}
+<h3 class="@type"> @ViewBag.Title Successful !</h3>
+<p>@Html.DisplayFor(model => model.Initial) already @ViewBag.Sub </p>
+<input type="button" value="Close" data-dismiss="modal" onclick="GetList()" class="btn btn-secondary" />
+<script>
+    $(document).ready(function() {
+        GetList();
+    });
+</script>

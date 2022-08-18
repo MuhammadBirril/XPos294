@@ -1,0 +1,25 @@
+﻿@model ViewModel.BookViewModel
+@{
+    string customStyle = "";
+    switch (ViewBag.Title)
+    {
+        case "Create":
+            customStyle = "text-success";
+            break;
+        case "Edit":
+            customStyle = "text-warning";
+            break;
+        default:
+            customStyle = "text-danger";
+            break;
+    }
+}
+<h3 class="@customStyle">@ViewBag.Title Successful !</h3>
+<p>@Html.DisplayFor(model => model.NamaBuku) already @ViewBag.Body!</p>
+<input type="button" value="Close" data-dismiss="modal" class="btn btn-secondary" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        GetList();
+    });
+</script>
+

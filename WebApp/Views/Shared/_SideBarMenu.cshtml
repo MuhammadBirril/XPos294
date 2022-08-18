@@ -1,0 +1,66 @@
+﻿@using WebApp.Security
+
+@{
+    List<string> defaultMenu = new List<string>() { "Category", "Variant", "Prodyct", "Order" };
+}
+<!-- Sidebar Menu -->
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+
+        <li class="nav-header">MENU</li>
+        @if (ContextAccessor.GetMenuRoles()[0] == "Administrator")
+        {
+            foreach (var item in defaultMenu)
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="@item" asp-action="Index">
+                        <i class="nav-icon far fa-image"></i>
+                        <p>
+                            @item
+                        </p>
+                    </a>
+                </li>
+            }
+        }
+        else
+        {
+            foreach (var item in ContextAccessor.GetMenuRoles())
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="@item" asp-action="Index">
+                        <i class="nav-icon far fa-image"></i>
+                        <p>
+                            @item
+                        </p>
+                    </a>
+                </li>
+            }
+        }
+        @if (ContextAccessor.IsAuthenticated())
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">
+                    <i class="nav-icon far fa-image"></i>
+                    <p>
+                        Logout
+                    </p>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">
+                    <i class="nav-icon far fa-image"></i>
+                    <p>
+                        Login
+                    </p>
+                </a>
+            </li>
+        }
+
+    </ul>
+</nav>
+<!-- /.sidebar-menu -->

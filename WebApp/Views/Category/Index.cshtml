@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Category";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="card">
+    <h5 class="card-header">
+        <button type="button" class="btn btn-primary" id="btn-create">Create New Category</button>
+    </h5>
+    <div class="card-body">
+        <div class="table-responsive" id="panel-body">
+            Loading...
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="form-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-label">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            @*            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+            </div>*@
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            //alert("Hello!");
+            GetList();
+        });
+
+        function GetList() {
+            $.ajax({
+                url: '@Url.Action("List")',
+                type: 'get',
+                success: function(result) {
+                    $('#panel-body').html(result)
+                }
+            })
+        }
+
+        $('#btn-create').click(function() {
+            $.ajax({
+                url: '@Url.Action("Create")',
+                type: 'get',
+                success: function(result) {
+                    $('.modal-body').html(result);
+                }
+            })
+            $('.modal-title').html('Create New Category');
+            $('#form-modal').modal('show');
+        });
+    </script>
+}

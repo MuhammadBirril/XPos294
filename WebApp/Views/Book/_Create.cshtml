@@ -1,0 +1,47 @@
+﻿@model ViewModel.BookViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" method="post" id="form-create" name="form-create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="KodeBuku" class="control-label"></label>
+                <input asp-for="KodeBuku" class="form-control" />
+                <span asp-validation-for="KodeBuku" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NamaBuku" class="control-label"></label>
+                <input asp-for="NamaBuku" class="form-control" />
+                <span asp-validation-for="NamaBuku" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="button" value="Cancel" data-dismiss="modal" onclick="GetList()" class="btn btn-secondary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $('#form-create').submit(function() {
+        var dataForm = new FormData($(this)[0]);
+        console.log(dataForm);
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: dataForm,
+            processData: false,
+            contentType: false,
+            success: function(result) {
+                $('.modal-body').html(result);
+            }
+        })
+        return false;
+    });
+</script>
+
