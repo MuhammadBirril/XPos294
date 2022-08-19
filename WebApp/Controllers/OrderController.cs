@@ -12,7 +12,7 @@ namespace WebApp.Controllers
 {
     [Authorize(Roles = "Administrator,Order")]
     public class OrderController : Controller
-    {  
+    {
         private readonly ProductService proSrv;
 
         public OrderController(IConfiguration configuration)
