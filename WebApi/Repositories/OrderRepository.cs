@@ -10,7 +10,6 @@ namespace WebApi.Repositories
     {
         private XposDbContext _XposDbContext = new XposDbContext();
         private ResponseResult result = new ResponseResult();
-
         private string _UserName;
 
         public OrderRepository()

@@ -1,15 +1,10 @@
 ﻿@model IEnumerable<ViewModel.ProductViewModel>
 
-
-
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VariantId)
+                @Html.DisplayNameFor(model => model.VariantName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Initial)
@@ -33,38 +28,79 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VariantId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Initial)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VariantName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Initial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stock)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Active)
+                </td>
+                <td>
+                   <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-warning btn-edit" data-id="@item.Id">Edit</button>
+                        <button type="button" class="btn btn-secondary btn-details" data-id="@item.Id">Detail</button>
+                        <button type="button" class="btn btn-danger btn-delete" data-id="@item.Id">Delete</button>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<script>
+    $('.btn-edit').click(function() {
+        $.ajax({
+            url: '@Url.Action("Edit")',
+            type: 'get',
+            data: { id: $(this).attr('data-id') },
+            success: function(result) {
+                $('.modal-title').html('Edit');
+                $('.modal-body').html(result);
+                $('#form-modal').modal('show');
+            }
+        })
+    });
+
+    $('.btn-details').click(function() {
+        $.ajax({
+            url: '@Url.Action("Details")',
+            type: 'get',
+            data: { id: $(this).attr('data-id') },
+            success: function(result) {
+                $('.modal-title').html('Details');
+                $('.modal-body').html(result);
+                $('#form-modal').modal('show');
+            }
+        })
+    });
+
+    $('.btn-delete').click(function() {
+        $.ajax({
+            url: '@Url.Action("Delete")',
+            type: 'get',
+            data: { id: $(this).attr('data-id') },
+            success: function(result) {
+                $('.modal-title').html('Delete');
+                $('.modal-body').html(result);
+                $('#form-modal').modal('show');
+            }
+        })
+    });
+</script>

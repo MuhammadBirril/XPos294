@@ -38,7 +38,10 @@ namespace WebApp.Security
 
         public static List<string> GetMenuRoles()
         {
-            return GetBy("MenuRoles").Split(',').ToList();
+            List<string> menus = GetBy("MenuRoles").Split(',').ToList();
+            if (menus[0] == "")
+                return new List<string>();
+            return menus;
         }
 
         public static string GetToken()

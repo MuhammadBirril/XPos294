@@ -2,6 +2,7 @@
 
 @{
     List<string> defaultMenu = new List<string>() { "Category", "Variant", "Product", "Order" };
+    List<string> userMenu = ContextAccessor.GetMenuRoles();
 }
 <!-- Sidebar Menu -->
 <nav class="mt-2">
@@ -10,6 +11,8 @@
              with font-awesome or any other icon font library -->
 
         <li class="nav-header">MENU</li>
+        @if (userMenu.Count > 0)
+        {
         @if (ContextAccessor.GetMenuRoles()[0] == "Administrator")
         {
             foreach (var item in defaultMenu)
@@ -38,6 +41,7 @@
                 </li>
             }
         }
+        }
         @if (ContextAccessor.IsAuthenticated())
         {
             <li class="nav-item">
@@ -60,6 +64,5 @@
                 </a>
             </li>
         }
-
     </ul>
 </nav>

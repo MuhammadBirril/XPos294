@@ -13,14 +13,13 @@ using System.Threading.Tasks;
 using ViewModel;
 using WebApp.Services;
 
+
 namespace WebApp.Controllers
 {
     [Authorize(Roles = "Administrator,Variant")]
     public class VariantController : Controller
     {
         private readonly ILogger<VariantController> _logger;
-        private readonly IConfiguration _configuration;
-        private readonly string webApiBaseUrl;
 
         private readonly CategoryService catServ;
         private readonly VariantService varServ;
@@ -28,8 +27,6 @@ namespace WebApp.Controllers
         public VariantController(ILogger<VariantController> logger, IConfiguration configuration)
         {
             _logger = logger;
-            _configuration = configuration;
-            webApiBaseUrl = _configuration.GetValue<string>("WebApiBaseUrl");
             catServ = new CategoryService(configuration);
             varServ = new VariantService(configuration);
         }
@@ -41,15 +38,7 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> List()
         {
-            List<VariantViewModel> list = new List<VariantViewModel>();
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(webApiBaseUrl + "/variant"))
-                {
-                    var apiResponse = await response.Content.ReadAsStringAsync();
-                    list = JsonConvert.DeserializeObject<List<VariantViewModel>>(apiResponse);
-                }
-            }
+            List<VariantViewModel> list = await varServ.GetAll();
             return PartialView("_List", list);
         }
 
@@ -65,25 +54,15 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                ResponseResult result = new ResponseResult();
-                using (var httpClient = new HttpClient())
+                ResponseResult result = await varServ.Create(model);
+                if (result.Success)
                 {
-                    string strPayload = JsonConvert.SerializeObject(model);
-                    HttpContent content = new StringContent(strPayload, Encoding.UTF8, "application/json");
-                    using (var response = await httpClient.PostAsync(webApiBaseUrl + "/variant", content))
-                    {
-                        var apiResponse = await response.Content.ReadAsStringAsync();
-                        result = JsonConvert.DeserializeObject<ResponseResult>(apiResponse);
-                        if (result.Success)
-                        {
-                            ViewBag.Title = "Create";
-                            ViewBag.SubTitle = "created";
-                            return PartialView("_Success", model);
-                        }
-                        else
-                            ViewBag.ErrorMessage = result.Message;
-                    }
+                    ViewBag.Title = "Create";
+                    ViewBag.Body = "Created!";
+                    return PartialView("_Success", model);
                 }
+                else
+                    ViewBag.ErrorMessage = result.Message;
             }
             List<CategoryViewModel> categoryList = await catServ.GetAll();
             ViewBag.CategoryList = new SelectList(categoryList, "Id", "Name");
@@ -103,25 +82,15 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                ResponseResult result = new ResponseResult();
-                using (var httpClient = new HttpClient())
+                ResponseResult result = await varServ.Update(model);
+                if (result.Success)
                 {
-                    string strPayload = JsonConvert.SerializeObject(model);
-                    HttpContent content = new StringContent(strPayload, Encoding.UTF8, "application/json");
-                    using (var response = await httpClient.PutAsync(webApiBaseUrl + "/variant", content))
-                    {
-                        var apiResponse = await response.Content.ReadAsStringAsync();
-                        result = JsonConvert.DeserializeObject<ResponseResult>(apiResponse);
-                        if (result.Success)
-                        {
-                            ViewBag.Title = "Change";
-                            ViewBag.SubTitle = "changed";
-                            return PartialView("_Success", model);
-                        }
-                        else
-                            ViewBag.ErrorMessage = result.Message;
-                    }
+                    ViewBag.Title = "Edit";
+                    ViewBag.Body = "Changed!";
+                    return PartialView("_Success", model);
                 }
+                else
+                    ViewBag.ErrorMessage = result.Message;
             }
             List<CategoryViewModel> categoryList = await catServ.GetAll();
             ViewBag.CategoryList = new SelectList(categoryList, "Id", "Name");
@@ -146,27 +115,17 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                ResponseResult result = new ResponseResult();
-                using (var httpClient = new HttpClient())
+                ResponseResult result = await varServ.Delete(model);
+                if (result.Success)
                 {
-                    using (var response = await httpClient.DeleteAsync(webApiBaseUrl + "/variant/" + model.Id))
-                    {
-                        var apiResponse = await response.Content.ReadAsStringAsync();
-                        result = JsonConvert.DeserializeObject<ResponseResult>(apiResponse);
-                        if (result.Success)
-                        {
-                            ViewBag.Title = "Delete";
-                            ViewBag.SubTitle = "deleted";
-                            return PartialView("_Success", model);
-                        }
-                        else
-                            ViewBag.ErrorMessage = result.Message;
-                    }
+                    ViewBag.Title = "Delete";
+                    ViewBag.Body = "Deleted";
+                    return PartialView("_Success", model);
                 }
+                else
+                    ViewBag.ErrorMessage = result.Message;
             }
             return PartialView("_Delete", model);
         }
     }
 }
-
-

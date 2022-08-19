@@ -90,6 +90,7 @@ namespace WebApi.Repositories
                           {
                               Id = o.Id,
                               VariantId = o.VariantId,
+                              VariantName = o.Variant.Name,
                               Initial = o.Initial,
                               Name = o.Name,
                               Description = o.Description,
@@ -115,6 +116,7 @@ namespace WebApi.Repositories
                           {
                               Id = o.Id,
                               VariantId = o.VariantId,
+                              VariantName = o.Variant.Name,
                               Initial = o.Initial,
                               Name = o.Name,
                               Description = o.Description,
